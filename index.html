@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Pribadi - Chat Interaktif</title>
+
+  <!-- Google Font: Boogaloo -->
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: "Boogaloo", sans-serif;
+      background-color: #f4f6f8;
+      color: #003366;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003366;
+      padding: 20px;
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    img {
+      display: block;
+      margin: 20px auto;
+      width: 200px;
+      border-radius: 50%;
+    }
+
+    .photo-top {
+      display: block;
+      margin: 0 auto 20px;
+      width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .qa p {
+      margin: 10px 0;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qa strong {
+      color: #003366;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #555;
+    }
+
+    /* Chatbox styles */
+    .chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    .chat-icon:hover {
+      background-color: #005fa3;
+    }
+
+    .chatbox {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    .chatbox-header {
+      background-color: #007acc;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+      background: none;
+      border: none;
+    }
+
+    .chatbox-messages {
+      height: 250px;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 0.95em;
+    }
+
+    .chatbox-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chatbox-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chatbox-input button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .chatbox-input button:hover {
+      background: #005fa3;
+    }
+
+    .message.user {
+      text-align: right;
+      color: #003366;
+      margin: 5px 0;
+    }
+
+    .message.bot {
+      text-align: left;
+      color: #cc0000;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>✨ Halo, Selamat Datang di Web Pribadiku! ✨</h1>
+
+  <!-- Foto tambahan di bawah judul -->
+  <img src="gambar1.jpg" alt="Foto Tambahan" class="photo-top">
+
+  <div class="content">
+    <img src="https://via.placeholder.com/200" alt="Foto Profil">
+
+    <div class="qa">
+      <p>👤 <strong>Nama:</strong> [Isi Namamu]</p>
+      <p>🏫 <strong>Sekolah:</strong> [Nama Sekolah]</p>
+      <p>📖 <strong>Hobi:</strong> Menulis ✍️ dan Membaca 📚</p>
+      <p>⭐ <strong>Cita-cita:</strong> Jadi orang baik 😇 yang penting tidak buat dosa dan masuk neraka, aman! 😄</p>
+      <p>🎬 <strong>Video favorit:</strong> 
+        <a href="https://youtu.be/wJ6FMjZkbMI" target="_blank">Klik di sini</a>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    Dibuat dengan ❤️ oleh [Namamu] | <a href="https://github.com/[username]" target="_blank">GitHub-ku</a>
+  </footer>
+
+  <!-- Chat Icon -->
+  <div class="chat-icon" id="chatIcon">📱</div>
+
+  <!-- Chatbox -->
+  <div class="chatbox" id="chatBox">
+    <div class="chatbox-header">
+      Chat dengan Aku 🤖
+      <button class="close-btn" id="closeChat">❌</button>
+    </div>
+    <div class="chatbox-messages" id="chatMessages">
+      <div class="message bot">Hai! Mau tahu tentang aku? Coba tanya misalnya “siapa namamu?” atau “apa hobimu?”.</div>
+    </div>
+    <div class="chatbox-input">
+      <input type="text" id="userInput" placeholder="Tulis pesan..." />
+      <button id="sendBtn">Kirim</button>
+    </div>
+  </div>
+
+  <script>
+    const chatIcon = document.getElementById("chatIcon");
+    const chatBox = document.getElementById("chatBox");
+    const sendBtn = document.getElementById("sendBtn");
+    const userInput = document.getElementById("userInput");
+    const chatMessages = document.getElementById("chatMessages");
+    const closeBtn = document.getElementById("closeChat");
+
+    chatIcon.addEventListener("click", () => {
+      chatBox.style.display = "flex";
+    });
+
+    closeBtn.addEventListener("click", () => {
+      chatBox.style.display = "none";
+    });
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage("user", text);
+      userInput.value = "";
+
+      setTimeout(() => {
+        addMessage("bot", getBotResponse(text));
+      }, 600);
+    }
+
+    function addMessage(sender, text) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.textContent = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+      input = input.toLowerCase();
+
+      if (input.includes("nama")) return "Namaku Wiwik_tiwul😊";
+      if (input.includes("sekolah")) return "Aku bersekolah di salah satu SMP di Sambas 🏫";
+      if (input.includes("hobi")) return "Aku suka menulis ✍️ dan membaca 📖";
+      if (input.includes("cita")) return "Cita-citaku adalah jadi orang baik 😇 yang penting tidak buat dosa dan masuk neraka, aman! 😄";
+      if (input.includes("halo") || input.includes("hai")) return "Halo juga! Senang bertemu denganmu 😊";
+      if (input.includes("video")) return "Kamu bisa lihat video favoritku di sini 🎬 👉 https://youtu.be/wJ6FMjZkbMI";
+      
+      return "Hmm... aku belum tahu jawabannya. Coba tanya hal lain tentang aku! 🤔";
+    }
+  </script>
+</body>
+</html>
