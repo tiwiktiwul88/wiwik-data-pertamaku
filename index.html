@@ -169,13 +169,18 @@
       color: #cc0000;
       margin: 5px 0;
     }
+
+    .typing {
+      font-style: italic;
+      color: #555;
+    }
+
   </style>
 </head>
 <body>
 
   <h1>✨ Halo, Selamat Datang di Web Pribadiku! ✨</h1>
 
-  <!-- Foto tambahan di bawah judul -->
   <img src="Frog.jpg" alt="Foto Tambahan" class="photo-top">
 
   <div class="content">
@@ -183,7 +188,7 @@
 
     <div class="qa">
       <p>👤 <strong>Nama:</strong> Wiwik_tiwul</p>
-      <p>🏫 <strong>Sekolah:</strong> Aku bersekolah di salah satu SMP di Sambas 🏫</p>
+      <p>🏫 <strong>Sekolah:</strong> Aku bersekolah di salah satu SMP di Sambas</p>
       <p>📖 <strong>Hobi:</strong> Menulis ✍️ dan Membaca 📚</p>
       <p>⭐ <strong>Cita-cita:</strong> Jadi orang baik 😇 yang penting tidak buat dosa dan masuk neraka, aman! 😄</p>
       <p>🎬 <strong>Video favorit:</strong> 
@@ -193,13 +198,11 @@
   </div>
 
   <footer>
-    Dibuat dengan ❤️ oleh wiwik_tiwul | <a href="https://github.com/Wiwik_tiwul" target="_blank">GitHub-ku</a>
+    Dibuat dengan ❤️ oleh Wiwik_tiwul | <a href="https://github.com/wiwik_tiwul" target="_blank">GitHub-ku</a>
   </footer>
 
-  <!-- Chat Icon -->
   <div class="chat-icon" id="chatIcon">📱</div>
 
-  <!-- Chatbox -->
   <div class="chatbox" id="chatBox">
     <div class="chatbox-header">
       Chat dengan Aku 🤖
@@ -222,13 +225,8 @@
     const chatMessages = document.getElementById("chatMessages");
     const closeBtn = document.getElementById("closeChat");
 
-    chatIcon.addEventListener("click", () => {
-      chatBox.style.display = "flex";
-    });
-
-    closeBtn.addEventListener("click", () => {
-      chatBox.style.display = "none";
-    });
+    chatIcon.addEventListener("click", () => chatBox.style.display = "flex");
+    closeBtn.addEventListener("click", () => chatBox.style.display = "none");
 
     sendBtn.addEventListener("click", sendMessage);
     userInput.addEventListener("keypress", function(e) {
@@ -242,9 +240,17 @@
       addMessage("user", text);
       userInput.value = "";
 
+      // animasi "bot mengetik..."
+      const typingMsg = document.createElement("div");
+      typingMsg.classList.add("message", "bot", "typing");
+      typingMsg.textContent = "Bot sedang mengetik...";
+      chatMessages.appendChild(typingMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
       setTimeout(() => {
+        typingMsg.remove();
         addMessage("bot", getBotResponse(text));
-      }, 600);
+      }, 1200); // delay 1,2 detik
     }
 
     function addMessage(sender, text) {
@@ -258,7 +264,7 @@
     function getBotResponse(input) {
       input = input.toLowerCase();
 
-      if (input.includes("nama")) return "Namaku Wiwik_tiwul😊";
+      if (input.includes("nama")) return "Namaku Wiwik_tiwul 😊";
       if (input.includes("sekolah")) return "Aku bersekolah di salah satu SMP di Sambas 🏫";
       if (input.includes("hobi")) return "Aku suka menulis ✍️ dan membaca 📖";
       if (input.includes("cita")) return "Cita-citaku adalah jadi orang baik 😇 yang penting tidak buat dosa dan masuk neraka, aman! 😄";
